@@ -2,8 +2,8 @@ const { orderModel, userModel } = require("../models/associations");
 const cashfree = require("../utils/cashfree");
 const { randomUUID } = require("crypto");
 const db = require("../utils/database");
-const sendEmail = require("../utils/emailService"); // ✅ Added import
-const { premiumConfirmationEmailHtml } = require("../utils/emailComponents"); // ✅ Added import
+const sendEmail = require("../utils/emailService"); 
+const { premiumConfirmationEmailHtml } = require("../utils/emailComponents"); 
 
 const MEMBERSHIP_AMOUNT = 49;
 
@@ -12,7 +12,7 @@ const isMockPayment =
   process.env.NODE_ENV === "development" &&
   process.env.MOCK_PAYMENTS === "true";
 
-// ✅ Helper function to send the Premium confirmation email
+// function to send the Premium confirmation email
 const sendPremiumConfirmationEmail = async (userId) => {
   try {
     const user = await userModel.findByPk(userId);

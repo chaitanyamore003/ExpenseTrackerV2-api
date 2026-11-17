@@ -3,7 +3,7 @@ const sendEmail = require("../utils/emailService");
 const {
   resetEmailHtml,
   resetConfirmationEmailHtml,
-} = require("../utils/emailComponents"); // ✅ Added new import
+} = require("../utils/emailComponents");
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
 const db = require("../utils/database");
@@ -33,7 +33,7 @@ const forgotPassword = async (req, res) => {
     });
 
     // Dynamic reset URL
-    const resetURL = `https://rally-tameness-mardi.ngrok-free.dev/password/resetpassword/${requestId}`;
+    const resetURL = `${process.env.FRONTEND_URL}/password/resetpassword/${requestId}`;
 
     // Send email through Brevo
     await sendEmail({
@@ -61,7 +61,6 @@ const forgotPassword = async (req, res) => {
   }
 };
 
-// backend/controllers/passwordController.js
 const resetPassword = async (req, res) => {
   try {
     const { id } = req.params;
@@ -120,7 +119,7 @@ const updatePassword = async (req, res) => {
       });
     }
 
-    // 4. Start a transaction (optional but recommended for data safety)
+    // 4. Start a transaction
     transaction = await db.transaction();
 
     // 5. Hash the new password
@@ -138,7 +137,7 @@ const updatePassword = async (req, res) => {
     // 8. Commit the transaction
     await transaction.commit();
 
-    // ✅ 9. Send Confirmation Email
+    // 9. Send Confirmation Email
     try {
       const frontendURL = process.env.FRONTEND_URL || "http://localhost:5173";
 
